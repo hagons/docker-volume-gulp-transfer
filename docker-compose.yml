@@ -10,3 +10,4 @@ services:
     volumes:
       - ./reappay_superadmin:/var/www/html
     restart: always
+    command: php artisan serve --host 0.0.0.0 --port 80

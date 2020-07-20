@@ -1,4 +1,4 @@
-FROM php:7.3.0-apache
+FROM php:7.3.0
 LABEL maintainer="hagon"
 
 # install composer
@@ -19,36 +19,35 @@ RUN npm install -g n cross-env npm && n latest
 # RUN composer global require hirak/prestissimo laravel/laravel laravel/installer
 
 # init root
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+# ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+# RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # php debugger
-RUN pecl install -f xdebug sqlsrv pdo_sqlsrv
-RUN docker-php-ext-enable xdebug
-RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini \
-  && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/xdebug.ini
+# RUN pecl install -f xdebug sqlsrv pdo_sqlsrv
+# RUN docker-php-ext-enable xdebug
+# RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+#   && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#   && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#   && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#   && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#   && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # install driver
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools libgssapi-krb5-2
-RUN echo "extension=pdo_sqlsrv.so" >> /usr/local/etc/php/php.ini
-RUN echo "extension=sqlsrv.so" >> /usr/local/etc/php/php.ini
+# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# RUN curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+# RUN apt-get update
+# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+# RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools libgssapi-krb5-2
+# RUN echo "extension=pdo_sqlsrv.so" >> /usr/local/etc/php/php.ini
+# RUN echo "extension=sqlsrv.so" >> /usr/local/etc/php/php.ini
 
 # install project
-WORKDIR /var/www/html
-COPY ./httpd.conf /etc/httpd/conf
-COPY ./openssl.cnf /etc/ssl
+# COPY ./httpd.conf /etc/httpd/conf
+# COPY ./openssl.cnf /etc/ssl
 COPY ./reappay_superadmin /var/www/html
-COPY ./package.json /var/www/html
 
-RUN composer install
+WORKDIR /var/www/html
+RUN composer install -d /var/www/html
