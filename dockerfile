@@ -50,4 +50,5 @@ RUN npm install -g n cross-env npm && n latest
 COPY ./reappay_superadmin /var/www/html
 
 WORKDIR /var/www/html
-RUN composer install -d /var/www/html
+RUN composer install -d /var/www/html --optimize-autoloader --no-dev
+RUN php artisan config:cache
