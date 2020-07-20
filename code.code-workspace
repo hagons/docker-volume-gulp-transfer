@@ -1,0 +1,51 @@
+{
+  "folders": [
+    {
+      "path": "reappay_superadmin"
+    },
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "intelephense.diagnostics.undefinedTypes": false,
+    "intelephense.diagnostics.undefinedFunctions": false,
+    "liveServer.settings.ignoreFiles": [
+      "**/*.scss",
+      "**/*.sass",
+      "**/*.ts",
+      "**/*.dat",
+      "**/*.ts",
+      "**/*.jpg",
+      "**/*.png",
+      "**/storage/**",
+      "**/vendor/**",
+      "**/node_modules/**",
+      "**/resources/js/**",
+      "**/resources/css/**",
+    ],
+    "liveServer.settings.multiRootWorkspaceName": "reappay_superadmin"
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Listen for XDebug",
+        "type": "php",
+        "request": "launch",
+        "port": 9001,
+        "pathMappings": {
+          "/var/www/html/": "${workspaceRoot:reappay_superadmin}"
+        }
+      },
+      {
+        "name": "Launch currently open script",
+        "type": "php",
+        "request": "launch",
+        "program": "${file}",
+        "cwd": "${fileDirname}",
+        "port": 9001
+      }
+    ]
+  }
+}
