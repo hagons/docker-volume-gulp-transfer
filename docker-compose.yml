@@ -8,6 +8,8 @@ services:
     ports:
       - '80:80'
     volumes:
-      - ./reappay_superadmin:/var/www/html:cached
+      - laravel_volumes:/var/www/html
     restart: always
-    command: apachectl -D FOREGROUND
+
+volumes:
+  laravel_volumes:

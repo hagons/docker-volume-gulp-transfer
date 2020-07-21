@@ -27,12 +27,6 @@ RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)"
   && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini \
   && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-# php setting
-COPY ./httpd.conf /etc/httpd/conf
-COPY ./openssl.cnf /etc/ssl
-RUN a2enmod rewrite
-RUN echo "AddType application/x-httpd-php .php .php3 .htm .html" >> /etc/apache2/apache2.conf
-
 # time
 ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -43,7 +37,12 @@ RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo "upload_max_filesize = 10M;" >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo "post_max_size = 30M;" >> /usr/local/etc/php/conf.d/uploads.ini
 
+# php setting
+COPY ./httpd.conf /etc/httpd/conf
+COPY ./openssl.cnf /etc/ssl
+RUN a2enmod rewrite
+RUN echo "AddType application/x-httpd-php .php .php3 .htm .html" >> /etc/apache2/apache2.conf
+
 # install project
-COPY ./reappay_superadmin /var/www/html
 WORKDIR /var/www/html
-CMD [ "composer", "install" ]
+COPY ./reappay_superadmin /var/www/html

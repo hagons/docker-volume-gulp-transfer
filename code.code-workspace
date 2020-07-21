@@ -24,7 +24,8 @@
       "**/resources/js/**",
       "**/resources/css/**",
     ],
-    "liveServer.settings.multiRootWorkspaceName": "reappay_superadmin"
+    "liveServer.settings.multiRootWorkspaceName": "reappay_superadmin",
+    // "liveServer.settings.wait": 1000
   },
   "launch": {
     "version": "0.2.0",
