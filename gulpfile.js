@@ -15,7 +15,10 @@ gulp.task('default', () =>
     if (src.includes('node_module')) return;
     if (src.includes('vendor')) return;
 
-    const dest = src.replace(f.base, '').split('\\').join('/');
+    const dest = src
+      .replace(`${f.base}\\${project_name}`, '')
+      .split('\\')
+      .join('/');
 
     if (f.event === 'unlink') {
       exec(
