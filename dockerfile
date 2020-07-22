@@ -47,5 +47,5 @@ RUN echo "AddType application/x-httpd-php .php .php3 .htm .html" >> /etc/apache2
 WORKDIR /var/www/html
 COPY ./reappay_superadmin /var/www/html
 
-RUN chmod -R 777 storege
+RUN chmod -R 777 storage
 RUN composer install
