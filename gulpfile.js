@@ -16,7 +16,7 @@ gulp.task('default', () =>
     if (src.includes('vendor')) return;
 
     const dest = src
-      .replace(`${f.base}\\${project_name}`, '')
+      .replace(`${f.base}\\${project_name}\\`, '')
       .split('\\')
       .join('/');
 
