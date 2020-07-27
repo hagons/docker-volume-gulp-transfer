@@ -7,9 +7,14 @@ services:
       dockerfile: dockerfile
     ports:
       - '80:80'
+      - '22:22'
     volumes:
       - laravel_volumes:/var/www/html
     restart: always
+    environment:
+      - TZ="Asia/Seoul"
+      - UPLOAD_SIZE=10M
+      - POST_SIZE=30M
 
 volumes:
   laravel_volumes:

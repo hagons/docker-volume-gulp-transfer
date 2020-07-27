@@ -7,13 +7,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 # install base
 RUN apt-get update -o Acquire::CompressionTypes::Order::=gz && apt-get upgrade -y && apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt-get update && apt-get install -y curl zlib1g-dev libzip-dev libpng-dev vim zip unixodbc-dev gnupg2 nodejs
+RUN apt-get install -y curl zlib1g-dev libzip-dev libpng-dev vim zip unixodbc-dev gnupg2 nodejs vsftpd npm net-tools ssh
 RUN docker-php-ext-install mbstring pdo pdo_mysql opcache zip gd mysqli bcmath
-RUN apt-get update && apt-get install -y npm
 RUN npm install -g n cross-env npm && n latest
 
-# init root
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# init php root
+ARG APACHE_DOCUMENT_ROOT=/var/www/html/public
+ENV APACHE_DOCUMENT_ROOT="${APACHE_DOCUMENT_ROOT}"
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
@@ -28,14 +28,19 @@ RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)"
   && echo "xdebug.remote_port=9001" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # time
-ENV TZ=Asia/Seoul
+ARG TZ="Asia/Seoul"
+ENV TZ="${TZ}"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo "date.timezone = Asia/Seoul" > /usr/local/etc/php/conf.d/timezone.ini
 
-# file size
+# php file size
+ARG UPLOAD_SIZE=10M
+ARG POST_SIZE=30M
+ENV UPLOAD_SIZE="${UPLOAD_SIZE}"
+ENV POST_SIZE="${POST_SIZE}"
 RUN touch /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "upload_max_filesize = 10M;" >> /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "post_max_size = 30M;" >> /usr/local/etc/php/conf.d/uploads.ini
+  && echo "upload_max_filesize = ${UPLOAD_SIZE};" >> /usr/local/etc/php/conf.d/uploads.ini \
+  && echo "post_max_size = ${POST_SIZE};" >> /usr/local/etc/php/conf.d/uploads.ini
 
 # php setting
 COPY ./httpd.conf /etc/httpd/conf
@@ -46,6 +51,10 @@ RUN echo "AddType application/x-httpd-php .php .php3 .htm .html" >> /etc/apache2
 # install project
 WORKDIR /var/www/html
 COPY ./reappay_superadmin /var/www/html
-
+COPY ./start.sh /start.sh
 RUN chmod -R 777 storage
-RUN composer install
+
+EXPOSE 22
+RUN useradd -m local && echo "local:local" | chpasswd && adduser local sudo
+
+CMD [ "/start.sh" ]
