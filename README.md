@@ -22,7 +22,6 @@ docker-compose build
 
 ```sh
 docker-compose up -d
-docker logs -f <YOUR_INSTANCE_NAME>
 ```
 
 - 소스 파일 연결 (cli 버전)
@@ -41,6 +40,7 @@ IDE 에서 소스코드 폴더와 컨테이너 내부에 `/var/www/html` 동기�
 - CLI 접근
 
 ```sh
+docker ps
 docker exec -it <YOUR_INSTANCE_NAME> bash
 php artisan
 ```
@@ -48,7 +48,7 @@ php artisan
 - 도커 실행 로그, 아파치 로그
 
 ```sh
-docker logs -f <YOUR_INSTANCE_NAME>
+docker-compose logs -f
 ```
 
 - 서버 종료
