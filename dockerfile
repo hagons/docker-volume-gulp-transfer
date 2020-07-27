@@ -7,7 +7,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 # install base
 RUN apt-get update -o Acquire::CompressionTypes::Order::=gz && apt-get upgrade -y && apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt-get install -y curl zlib1g-dev libzip-dev libpng-dev vim zip unixodbc-dev gnupg2 nodejs vsftpd npm net-tools ssh
+RUN apt-get install -y curl zlib1g-dev libzip-dev libpng-dev vim zip unixodbc-dev gnupg2 nodejs npm net-tools ssh
 RUN docker-php-ext-install mbstring pdo pdo_mysql opcache zip gd mysqli bcmath
 RUN npm install -g n cross-env npm && n latest
 
