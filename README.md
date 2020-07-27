@@ -25,6 +25,19 @@ docker-compose up -d
 docker logs -f <YOUR_INSTANCE_NAME>
 ```
 
+- 소스 파일 연결 (cli 버전)
+
+```sh
+npm install
+npm start
+```
+
+- 소스 파일 연결
+
+IDE 에서 소스코드 폴더와 컨테이너 내부에 `/var/www/html` 동기화 처리.
+
+하단에 정보 표시
+
 - CLI 접근
 
 ```sh
@@ -63,4 +76,10 @@ docker system prune --volumes
 - node 버전 : 14.2.0 (도커 실행 시점의 최신버전)
 - 지원 브라우저 범위 : 미정
 - xdebug port 9001
+- sftp
+    - host: localhost
+    - port: 22
+    - id: local
+    - pass: local
+    - remote path: /var/www/html
 
