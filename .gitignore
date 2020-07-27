@@ -1,3 +1,5 @@
 node_modules
 *-lock.json
 reappay_superadmin
+
+*-error.log
