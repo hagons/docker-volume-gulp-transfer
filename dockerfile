@@ -57,4 +57,4 @@ RUN chmod -R 777 storage
 EXPOSE 22
 RUN useradd -m local && echo "local:local" | chpasswd && adduser local sudo
 
-CMD [ "/start.sh" ]
+ENTRYPOINT [ "bash", "/start.sh" ]
