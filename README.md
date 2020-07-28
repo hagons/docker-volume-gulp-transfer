@@ -10,9 +10,13 @@
 
 ## 2. 실행
 
-- 준비
+- 개발 서버 준비
 
-`개발 서버 .env.example` 파일을 `.env` 로 변경 후 지정된 기본값을 처리.
+```sh
+cp ./.env.example ./.env
+```
+
+- 소스 코드 준비
 
 소스코드를 다운 받고, `소스코드의 .env` 파일을 소스 코드 최상단위 위치 시킴.
 
@@ -39,9 +43,16 @@ npm start
 
 - 소스 파일 연결
 
-IDE 에서 소스코드 폴더와 컨테이너 내부에 `/var/www/html` 동기화 처리.
+IDE 에서 소스코드 폴더와 컨테이너 내부를 ftp 로 동기화 처리.
 
-하단에 정보 표시
+```
+sftp
+    - host: localhost
+    - port: 22
+    - id: local
+    - pass: local
+    - remote path: /var/www/html
+```
 
 - CLI 접근
 
@@ -81,12 +92,6 @@ docker system prune --volumes
 - npm 버전 : 6.14.4 (도커 실행 시점의 최신버전)
 - node 버전 : 14.2.0 (도커 실행 시점의 최신버전)
 - xdebug port 9001
-- sftp
-    - host: localhost
-    - port: 22
-    - id: local
-    - pass: local
-    - remote path: /var/www/html
 - php plugin : zlib1g, zip, png, unixodbc, gnupg2, mbstring, pdo, opcache, gd, mysqli, bcmath, sqlsrv
 - 기타 : curl, vim, net-tools, ssh
 
