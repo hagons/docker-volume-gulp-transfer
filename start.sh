@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ "${DEBUG}" = true ]; then
   pecl install -f xdebug \
     && docker-php-ext-enable xdebug \
