@@ -9,10 +9,8 @@ services:
     volumes:
       - laravel_volumes:/var/www/html
     restart: always
-    environment:
-      - TZ="Asia/Seoul"
-      - UPLOAD_SIZE=10M
-      - POST_SIZE=30M
+    env_file:
+      - .env
 
 volumes:
   laravel_volumes:

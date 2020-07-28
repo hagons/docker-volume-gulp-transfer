@@ -3,3 +3,5 @@ node_modules
 reappay_superadmin
 
 *-error.log
+
+.env

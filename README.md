@@ -10,6 +10,12 @@
 
 ## 2. 실행
 
+- 준비
+
+`개발 서버 .env.example` 파일을 `.env` 로 변경 후 지정된 기본값을 처리.
+
+소스코드를 다운 받고, `소스코드의 .env` 파일을 소스 코드 최상단위 위치 시킴.
+
 - 컴파일
 
 서버를 구성할 때 최초 한번만 입력.
@@ -74,7 +80,6 @@ docker system prune --volumes
 - 컴포저 버전 : 1.10.6 (도커 실행 시점의 최신버전)
 - npm 버전 : 6.14.4 (도커 실행 시점의 최신버전)
 - node 버전 : 14.2.0 (도커 실행 시점의 최신버전)
-- 지원 브라우저 범위 : 미정
 - xdebug port 9001
 - sftp
     - host: localhost
@@ -82,4 +87,6 @@ docker system prune --volumes
     - id: local
     - pass: local
     - remote path: /var/www/html
+- php plugin : zlib1g, zip, png, unixodbc, gnupg2, mbstring, pdo, opcache, gd, mysqli, bcmath, sqlsrv
+- 기타 : curl, vim, net-tools, ssh
 
